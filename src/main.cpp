@@ -9,7 +9,7 @@ int latchPin = 26; // Pin connected to ST_CP of 74HC595
 int clockPin = 25; // Pin connected to SH_CP of 74HC595
 int dataPin = 32;  // Pin connected to DS of 74HC595
 
-// put function declarations here:
+// Function declarations:
 void updateShiftRegister(byte leds);
 void fadeAll();
 
@@ -24,20 +24,24 @@ void setup() {
 
 void loop() {
   // Simple LED chase effect
-  for (int i = 0; i < 8; i++) {
-    updateShiftRegister(1 << i);
-    delay(tDelay);
+  for (int j = 0; j < 23; j++) {
+    for (int i = 0; i < 8; i++) {
+      updateShiftRegister(1 << i);
+      delay(tDelay);
+    }
+    
+    for (int i = 6; i >= 0; i--) {
+      updateShiftRegister(1 << i);
+      delay(tDelay);
+    }
   }
-  /*
-  delay(tDelay * 10);
-  fadeAll();
-  delay(tDelay * 10);
-  */
-  for (int i = 6; i >= 0; i--) {
-    updateShiftRegister(1 << i);
-    delay(tDelay);
+  
+  // Fade all LEDs in and out
+  for (int i = 0; i < 23; i++) {
+    fadeAll();
+    delay(tDelay * 10);
   }
-}
+ }
 
 // put function definitions here:
 void updateShiftRegister(byte leds) {
@@ -51,6 +55,14 @@ void fadeAll() {
     for (int i = 0; i < 255; i++) {
       updateShiftRegister(i < brightness ? 0xFF : 0x00);
     }
-    delay(5);
+    delay(3);
+  }
+
+  // Fade out
+  for (int brightness = 255; brightness >= 0; brightness--) {
+    for (int i = 0; i < 255; i++) {
+      updateShiftRegister(i < brightness ? 0xFF : 0x00);
+    }
+    delay(3);
   }
 }
