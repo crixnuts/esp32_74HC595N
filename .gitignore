@@ -5,3 +5,5 @@
 .vscode/ipch
 'Elegoo Super Starter Kit for UNO V1.0.2019.09.17.pdf'
 Eight_LED_with_74HC595_Flash_LED.ino
+8leds.cpp
+8_leds_pairs.cpp
